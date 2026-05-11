@@ -1,6 +1,6 @@
 # Ex-1 IMPLEMENTATION-OF-SYMBOL-TABLE
 # Register Number : 212224240089
-# Date : 24/04/2026
+# Date : 11/05/2026
 
 # AIM :
 ## To write a C program to implement a symbol table.
@@ -19,75 +19,77 @@
 
 ```
 #include <stdio.h>
-#include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 
-#define MAX 100
+#define MAX_EXPRESSION_SIZE 100
 
-struct symbol
-{
-    char var;
-    void *address;
-};
+int main() {
+	int i = 0, j = 0, x = 0, n, flag = 0;
+	int k;
+	char b[MAX_EXPRESSION_SIZE], d[15], c, srch;
 
-int main()
-{
-    char input[MAX];
-    struct symbol table[MAX];
-    int i = 0, j = 0;
+	printf("Enter the Expression terminated by $: ");
+	while ((c = getchar()) != '$' && i < MAX_EXPRESSION_SIZE - 1) {
+		b[i++] = c;
+	}
+	b[i] = '\0';
+	n = i - 1;
 
-    printf("Enter the expression ending with $:\n");
-    scanf("%s", input);
+	printf("\nGiven Expression: %s\n", b);
 
-    while (input[i] != '$')
-    {
-        
-        if ((input[i] >= 'a' && input[i] <= 'z') || 
-            (input[i] >= 'A' && input[i] <= 'Z'))
-        {
-            table[j].var = input[i];
+	printf("\nSymbol Table\n");
+	printf("Symbol\tType\t\tAddress\n");
 
-            
-            table[j].address = malloc(sizeof(int));
+	for (j = 0; j <= n; j++) {
+		c = b[j];
+		if (isalpha((unsigned char)c)) {
+			int alreadyExists = 0;
+			for (k = 0; k < x; k++) {
+				if (d[k] == c) {
+					alreadyExists = 1;
+					break;
+				}
+			}
 
-            j++;
-        }
-        i++;
-    }
+			if (!alreadyExists) {
+				d[x] = c;
+				printf("%c\tidentifier\t%p\n", c, (void*)&d[x]);
+				x++;
+			}
+		}
+	}
 
-    
-    printf("\nSymbol Table:\n");
-    printf("Variable\tAddress\n");
+	// Clear input buffer
+	while ((c = getchar()) != '\n' && c != EOF);
 
-    for (i = 0; i < j; i++)
-    {
-        printf("%c\t\t%p\n", table[i].var, table[i].address);
-    }
+	printf("\nEnter the symbol to search: ");
+	srch = getchar();
 
-    
-    char search;
-    printf("\nEnter variable to search: ");
-    scanf(" %c", &search);
+	for (i = 0; i < x; i++) {
+		if (srch == d[i]) {
+			printf("Symbol Found\n");
+			flag = 1;
+			break;
+		}
+	}
+	if (flag == 0)
+		printf("Symbol Not Found\n");
 
-    for (i = 0; i < j; i++)
-    {
-        if (table[i].var == search)
-        {
-            printf("Variable found!\n");
-            printf("Variable: %c\nAddress: %p\n", search, table[i].address);
-            return 0;
-        }
-    }
-
-    printf("Variable not found.\n");
-
-    return 0;
+	return 0;
 }
+
 ```
 # OUTPUT
 
-<img width="1728" height="1040" alt="image" src="https://github.com/user-attachments/assets/c29a998d-9937-42ad-bacf-dcd86fd7f1ee" />
+# SYMBOL FOUND
 
+<img width="1920" height="1200" alt="Screenshot (1)" src="https://github.com/user-attachments/assets/7cd7e872-db81-4b54-825b-96991ec59f52" />
+
+# SYMBOL NOT FOUND
+
+<img width="1920" height="1200" alt="Screenshot (4)" src="https://github.com/user-attachments/assets/cace01ab-32bb-434b-99a9-e855e948a314" />
 
 # RESULT
 ### The program to implement a symbol table is executed and the output is verified.
